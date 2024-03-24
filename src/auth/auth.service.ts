@@ -3,22 +3,22 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { User } from './user.entity';
-import UserRepository from './users.repository';
-import { SingUpDto } from './dto/signup.dto';
-import * as argon from 'argon2';
-import { JwtService } from '@nestjs/jwt';
-import { SigninDto } from './dto/singin.dto';
-import { Token } from './dto/token.dto';
+} from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { User } from "./user.entity";
+import UserRepository from "./users.repository";
+import { SingUpDto } from "./dto/signup.dto";
+import * as argon from "argon2";
+import { JwtService } from "@nestjs/jwt";
+import { SigninDto } from "./dto/singin.dto";
+import { Token } from "./dto/token.dto";
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: UserRepository,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async findUserByEmail(email: string): Promise<User> {
@@ -29,11 +29,10 @@ export class AuthService {
     return isUserExist;
   }
   async signup(userDto: SingUpDto): Promise<User> {
-    console.log(userDto);
     const { email, password, username } = userDto;
     const isUserExist = await this.findUserByEmail(email);
     if (isUserExist) {
-      throw new BadRequestException('User exist');
+      throw new BadRequestException("User exist");
     }
     const hash = await argon.hash(password);
 
@@ -42,6 +41,7 @@ export class AuthService {
       password: hash,
       email: email,
     });
+    delete user.password;
 
     return user;
   }
@@ -52,13 +52,13 @@ export class AuthService {
     // Check if the user exists
     const user = await this.userRepository.findOne({ where: { email } });
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new UnauthorizedException("User not found");
     }
 
     // Verify password
     const isPasswordMatched = await argon.verify(user.password, password);
     if (!isPasswordMatched) {
-      throw new UnauthorizedException('Invalid password');
+      throw new UnauthorizedException("Invalid password");
     }
 
     const payload = {
