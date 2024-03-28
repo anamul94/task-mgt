@@ -1,11 +1,10 @@
 import {
-  BaseEntity,
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
@@ -14,6 +13,7 @@ import { User } from "src/auth/entites/user.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 @Entity()
+@Index("task_user_created_at_idx", ["user", "createdAt"])
 export class Task {
   @ApiProperty()
   @PrimaryGeneratedColumn("uuid")
@@ -34,8 +34,7 @@ export class Task {
   @ApiProperty()
   @ManyToOne(() => User)
   @JoinColumn()
-  @Column()
-  user: string;
+  user: User;
 
   @ApiProperty()
   @CreateDateColumn()
