@@ -9,6 +9,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: console,
   });
+  console.log(process.env);
+
   console.log("App is staring");
 
   const config = new DocumentBuilder()
