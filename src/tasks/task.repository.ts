@@ -1,7 +1,7 @@
 // task.repository.ts
-import { Repository } from 'typeorm';
-import { Task } from './task.entity';
-import { Injectable } from '@nestjs/common';
+import { Repository } from "typeorm";
+import { Task } from "./entities/task.entity";
+import { Injectable } from "@nestjs/common";
 
 // @Injectable()
 class TaskRepository extends Repository<Task> {

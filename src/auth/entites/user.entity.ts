@@ -1,4 +1,4 @@
-import { Task } from 'src/tasks/task.entity';
+import { Task } from "src/tasks/entities/task.entity";
 import {
   Column,
   CreateDateColumn,
@@ -6,11 +6,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()

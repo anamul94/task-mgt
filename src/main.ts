@@ -3,13 +3,11 @@ import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
 
 import { AppModule } from "./app.module";
 import { ValidationPipe } from "@nestjs/common";
-import { TasksModule } from "./tasks/tasks.module";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: console,
   });
-  console.log(process.env);
 
   console.log("App is staring");
 

@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "./user.entity";
+import { User } from "./entites/user.entity";
 import UserRepository from "./users.repository";
 import { SingUpDto } from "./dto/signup.dto";
 import * as argon from "argon2";

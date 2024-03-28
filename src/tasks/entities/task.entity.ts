@@ -9,8 +9,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { TaskStatus } from "./task.enum";
-import { User } from "src/auth/user.entity";
+import { TaskStatus } from "../task.enum";
+import { User } from "src/auth/entites/user.entity";
 import { ApiProperty } from "@nestjs/swagger";
 
 @Entity()

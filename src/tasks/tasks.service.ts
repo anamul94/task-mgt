@@ -3,31 +3,31 @@ import {
   Injectable,
   NotFoundException,
   UnauthorizedException,
-} from '@nestjs/common';
-import { TaskStatus } from './task.enum';
-import { CreateTaskDto } from './dto/task.input.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Task } from './task.entity';
-import TaskRepository from './task.repository';
-import { AllTaskResponse } from './dto/alltask.response.dto';
-import { TaskUpdateDto } from './dto/task.update.dto';
+} from "@nestjs/common";
+import { TaskStatus } from "./task.enum";
+import { CreateTaskDto } from "./dto/task.input.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Task } from "./entities/task.entity";
+import TaskRepository from "./task.repository";
+import { AllTaskResponse } from "./dto/alltask.response.dto";
+import { TaskUpdateDto } from "./dto/task.update.dto";
 
 @Injectable()
 export class TasksService {
   constructor(
     @InjectRepository(Task) // Ensure correct injection
-    private readonly taskRepository: TaskRepository,
+    private readonly taskRepository: TaskRepository
   ) {}
 
   async getAllTasks(
     userId: any,
     limit: number,
-    page: number,
+    page: number
   ): Promise<AllTaskResponse> {
     const skip = (limit - 1) * page; // Calculate the skip value based on page and limit
     const [tasks, total] = await this.taskRepository.findAndCount({
       where: { user: userId }, // Assuming 'user' is the property representing the relationship in the Task entity
-      order: { createdAt: 'DESC' },
+      order: { createdAt: "DESC" },
       take: page,
       skip: skip,
     });
@@ -103,6 +103,6 @@ export class TasksService {
       throw new BadRequestException();
     }
     await this.taskRepository.remove(task);
-    return 'success';
+    return "success";
   }
 }
